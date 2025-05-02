@@ -594,20 +594,47 @@ REGRESSION_MODELS = {
 }
 
 # Timeout function using signal (Unix-like systems only)
+# def train_with_timeout(model, X_train, y_train, timeout_seconds=60):
+#     """Trains a model with a specified timeout (works on Unix-like systems)."""
+#     # Check if signal is available (won't work on Windows)
+#     if not hasattr(signal, 'SIGALRM'):
+#         logger.warning("Timeout functionality requires Unix-like OS (signal.SIGALRM not available). Training without timeout.")
+#         try:
+#             start_time = time.time()
+#             model.fit(X_train, y_train)
+#             end_time = time.time()
+#             logger.info(f"Model trained in {end_time - start_time:.2f} seconds (no timeout).")
+#             return model, None # Return model and no error
+#         except Exception as e:
+#              logger.error(f"Error during model training (no timeout): {e}\n{traceback.format_exc()}")
+#              return None, str(e) # Return None for model and the error message
+# Timeout function using signal (Unix-like systems only) - MODIFIED TO REMOVE SIGNAL
 def train_with_timeout(model, X_train, y_train, timeout_seconds=60):
-    """Trains a model with a specified timeout (works on Unix-like systems)."""
-    # Check if signal is available (won't work on Windows)
-    if not hasattr(signal, 'SIGALRM'):
-        logger.warning("Timeout functionality requires Unix-like OS (signal.SIGALRM not available). Training without timeout.")
-        try:
-            start_time = time.time()
-            model.fit(X_train, y_train)
-            end_time = time.time()
-            logger.info(f"Model trained in {end_time - start_time:.2f} seconds (no timeout).")
-            return model, None # Return model and no error
-        except Exception as e:
-             logger.error(f"Error during model training (no timeout): {e}\n{traceback.format_exc()}")
-             return None, str(e) # Return None for model and the error message
+    """
+    Trains a model, logging the time taken. 
+    NOTE: The original signal-based timeout has been removed 
+    due to incompatibility with Streamlit's threading and non-Unix systems.
+    Long-running models will now run to completion.
+    """
+    logger.info(f"Attempting to train {type(model).__name__}. Timeout functionality (via signal) is disabled.")
+    start_time = time.time()
+    try:
+        # Directly fit the model without using signal for timeout
+        model.fit(X_train, y_train)
+        end_time = time.time()
+        training_duration = end_time - start_time
+        logger.info(f"Model {type(model).__name__} trained successfully in {training_duration:.2f} seconds.")
+        # If you want to enforce a soft limit check *after* training (less useful but possible):
+        # if training_duration > timeout_seconds:
+        #     logger.warning(f"Model {type(model).__name__} training ({training_duration:.2f}s) exceeded the nominal timeout limit of {timeout_seconds}s.")
+        
+        return model, None # Return trained model, no error
+
+    except Exception as e:
+        end_time = time.time()
+        logger.error(f"Error during model training for {type(model).__name__} after {end_time - start_time:.2f} seconds: {e}\n{traceback.format_exc()}")
+        return None, str(e) # Return None for model, the error message
+    # No finally block needed specifically for signal cleanup anymore
 
     # --- Timeout logic for Unix-like systems ---
     class TimeoutException(Exception): pass
