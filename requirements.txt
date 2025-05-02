@@ -18,4 +18,4 @@ openpyxl
 
 # --- Optional Dependency ---
 # Uncomment the line below ONLY if you require the Class Balancing features.
-imbalanced-learn=
+imbalanced-learn
