@@ -1,0 +1,21 @@
+# Web Application Framework
+streamlit
+
+# Core Data Handling & Numerics
+pandas
+numpy
+
+# Machine Learning & Metrics
+scikit-learn
+
+# Visualization
+plotly
+matplotlib
+seaborn
+
+# Required by pandas for Excel (.xlsx) support
+openpyxl
+
+# --- Optional Dependency ---
+# Uncomment the line below ONLY if you require the Class Balancing features.
+imbalanced-learn=
