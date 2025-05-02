@@ -117,9 +117,6 @@ Contributions are welcome! If you find a bug or have a feature request, please o
 5.  Push to the branch (`git push origin feature/your-feature-name`).
 6.  Open a Pull Request.
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. *(You should create a LICENSE file containing the MIT License text)*
 
 ## ✍️ Author
 
@@ -127,4 +124,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-*This README was generated based on the project code and common best practices.*
