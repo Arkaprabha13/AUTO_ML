@@ -55,11 +55,11 @@ except ImportError:
 
 # Logging setup
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger("AutoML-SaaS")
+logger = logging.getLogger("AutoML")
 
 # Page configuration
 st.set_page_config(
-    page_title="AutoML SaaS Platform", 
+    page_title="AutoML Platform", 
     page_icon="🚀", 
     layout="wide",
     initial_sidebar_state="expanded"
@@ -1331,7 +1331,7 @@ def get_table_download_link(df, filename="data.csv", link_text="Download CSV"):
 
 # --- Main App Logic ---
 
-st.title("🚀 AutoML SaaS Platform")
+st.title("🚀 AutoML Platform")
 st.markdown("Upload your data, explore insights, preprocess, train models, and evaluate performance - all in one place.")
 
 # Sidebar for Navigation
@@ -1899,5 +1899,5 @@ elif st.session_state.app_mode == "Evaluate Models":
 
 # --- Footer ---
 st.markdown("---")
-st.caption("AutoML SaaS Platform v1.0")
+st.caption("AutoML Platform v1.0")
 
